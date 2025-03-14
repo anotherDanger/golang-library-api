@@ -1,0 +1,360 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "API spec library",
+    "description": "API spec for golang open api library",
+    "version": "1.0.0"
+  },
+  "servers":[
+    {
+      "url" : "http://localhost/v1/library",
+      "description": "localhost"
+    }
+  ],
+  "security": [
+    {
+        "auth":[]
+    }
+  ],
+  "paths":{
+    "/library":{
+      "get":{
+        "summary": "GET all books",
+        "responses":{
+          "200":{
+            "description": "OK",
+            "content":{
+                "application/json":{
+                    "schema":{
+                        "type": "object",
+                        "properties": {
+                            "code":{
+                                "type": "integer",
+                                "example": 200
+                            },
+                            "status":{
+                                "type": "string",
+                                "example": "OK"
+                            },
+                            "data":{
+                                "type": "array",
+                                "items":{
+                                    "properties": {
+                                        "id":{
+                                            "type": "integer"
+                                        },
+                                        "name":{
+                                            "type": "string"
+                                        },
+                                        "author":{
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+          },
+          "401":{
+            "description": "unauthorized",
+            "content": {
+                "application/json":{
+                    "schema":{
+                        "type": "object",
+                        "properties": {
+                            "code":{
+                                "type": "integer"
+                            },
+                            "status":{
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+          }
+        }
+      },
+      "post":{
+        "summary": "add a book",
+        "requestBody":{
+            "content": {
+                "application/json":{
+                    "schema":{
+                        "type": "object",
+                        "properties": {
+                            "name":{
+                                "type": "string"
+                            },
+                            "author":{
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "responses": {
+            "201":{
+                "description": "OK",
+                "content": {
+                    "application/json":{
+                        "schema":{
+                            "type": "object",
+                            "properties": {
+                                "code":{
+                                    "type": "integer",
+                                    "example": 201
+                                },
+                                "status":{
+                                    "type": "string",
+                                    "example": "OK"
+                                },
+                                "data":{
+                                    "type": "object",
+                                    "properties": {
+                                        "id":{
+                                            "type": "integer"
+                                        },
+                                        "name":{
+                                            "type": "string"
+                                        },
+                                        "author":{
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "401":{
+                "description": "unauthorized",
+                "content": {
+                    "application/json":{
+                        "schema":{
+                            "type": "object",
+                            "properties": {
+                                "code":{
+                                    "type": "integer",
+                                    "example": 401
+                                },
+                                "status":{
+                                    "type": "string",
+                                    "example": "unauthorized"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+      }
+    },
+    "/library/{bookId}":{
+        "parameters": [
+            {
+                "name": "bookId",
+                "in": "path",
+                "schema":{
+                    "type": "integer"
+                },
+                "required": true
+            }
+        ],
+        "put":{
+            "summary": "update a book",
+            "requestBody":{
+                "content": {
+                    "application/json":{
+                        "schema":{
+                            "type": "object",
+                            "properties": {
+                                "name":{
+                                    "type": "string"
+                                },
+                                "author":{
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "responses": {
+                "200":{
+                    "description": "OK",
+                    "content": {
+                        "application/json":{
+                            "schema":{
+                                "type": "object",
+                                "properties": {
+                                    "code":{
+                                        "type": "integer",
+                                        "example": 200
+                                    },
+                                    "status":{
+                                        "type": "string",
+                                        "example": "OK"
+                                    },
+                                    "data":{
+                                        "type": "object",
+                                        "properties": {
+                                            "id":{
+                                                "type": "integer"
+                                            },
+                                            "name":{
+                                                "type": "string"
+                                            },
+                                            "author":{
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "401":{
+                    "description": "unauthorized",
+                    "content": {
+                        "application/json":{
+                            "schema":{
+                                "type": "object",
+                                "properties": {
+                                    "code":{
+                                        "type": "integer",
+                                        "example": 401
+                                    },
+                                    "status":{
+                                        "type": "string",
+                                        "example": "unauthorized"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "get":{
+            "summary": "find by id",
+            "responses": {
+                "200":{
+                    "description": "OK",
+                    "content": {
+                        "application/json":{
+                            "schema":{
+                                "type": "object",
+                                "properties": {
+                                    "code":{
+                                        "type": "integer",
+                                        "example": 200
+                                    },
+                                    "status":{
+                                        "type": "string",
+                                        "example": "OK"
+                                    },
+                                    "data":{
+                                        "type": "object",
+                                        "properties": {
+                                            "id":{
+                                                "type": "integer"
+                                            },
+                                            "name":{
+                                                "type": "string"
+                                            },
+                                            "author":{
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "401":{
+                    "description": "unauthorized",
+                    "content": {
+                        "application/json":{
+                            "schema":{
+                                "type": "object",
+                                "properties": {
+                                    "code":{
+                                        "type": "integer",
+                                        "example": 401
+                                    },
+                                    "status":{
+                                        "type": "string",
+                                        "example": "unauthorized"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "delete":{
+            "summary": "delete by id",
+            "responses": {
+                "204":{
+                    "description": "OK",
+                    "content": {
+                        "application/json":{
+                            "schema":{
+                                "type": "object",
+                                "properties": {
+                                    "code":{
+                                        "type": "integer",
+                                        "example": 204
+                                    },
+                                    "status":{
+                                        "type": "string",
+                                        "example": "OK"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "401":{
+                    "description": "unauthorized",
+                    "content": {
+                        "application/json":{
+                            "schema":{
+                                "type": "object",
+                                "properties": {
+                                    "code":{
+                                        "type": "integer",
+                                        "example": 401
+                                    },
+                                    "status":{
+                                        "type": "string",
+                                        "example": "unauthorized"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+        "auth":{
+            "type": "apiKey",
+            "in": "header",
+            "name": "X-API-Key"
+        }
+    }
+  }
+
+}
