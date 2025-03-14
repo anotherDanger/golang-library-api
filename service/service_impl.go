@@ -10,11 +10,11 @@ import (
 )
 
 type ServiceImpl struct {
-	repository *repository.RepositoryImpl
+	repository repository.Repository
 	db         *sql.DB
 }
 
-func NewService(repository *repository.RepositoryImpl, db *sql.DB) Service {
+func NewService(repository repository.Repository, db *sql.DB) Service {
 	return &ServiceImpl{
 		repository: repository,
 		db:         db,

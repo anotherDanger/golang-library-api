@@ -44,7 +44,7 @@ func (repository *RepositoryImpl) Update(ctx context.Context, tx *sql.Tx, book *
 	}
 
 	query := "update books set name = ?, author = ? where id = ?"
-	_, err := tx.ExecContext(ctx, query, book.Name, book.Author)
+	_, err := tx.ExecContext(ctx, query, book.Name, book.Author, book.Id)
 	if err != nil {
 		panic(err)
 	}
