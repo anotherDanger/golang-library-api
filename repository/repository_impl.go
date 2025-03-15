@@ -83,7 +83,7 @@ func (repository *RepositoryImpl) FindAll(ctx context.Context, tx *sql.Tx) []*en
 	if err != nil {
 		panic(err)
 	}
-
+	defer results.Close()
 	var books []*entity.Domain
 
 	var id int

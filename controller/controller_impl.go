@@ -28,7 +28,7 @@ func (controller *ControllerImpl) Create(w http.ResponseWriter, r *http.Request,
 	webResponse := &web.WebResponse{
 		Code:   200,
 		Status: "OK",
-		Data:   *response,
+		Data:   response,
 	}
 
 	w.Header().Set("Content-Type", "application/json")
@@ -48,7 +48,7 @@ func (controller *ControllerImpl) Update(w http.ResponseWriter, r *http.Request,
 	webResponse := &web.WebResponse{
 		Code:   200,
 		Status: "OK",
-		Data:   *response,
+		Data:   response,
 	}
 
 	w.Header().Set("Content-Type", "application/json")
@@ -80,7 +80,7 @@ func (controller *ControllerImpl) FindById(w http.ResponseWriter, r *http.Reques
 	webResponse := &web.WebResponse{
 		Code:   200,
 		Status: "OK",
-		Data:   *response,
+		Data:   response,
 	}
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(204)
