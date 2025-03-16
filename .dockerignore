@@ -1,0 +1,15 @@
+.git
+.gitignore
+.json
+.env
+*.log
+*.md
+*.swp
+*.bak
+vendor/
+bin/
+build/
+*.test
+*.out
+.idea/
+.vscode/

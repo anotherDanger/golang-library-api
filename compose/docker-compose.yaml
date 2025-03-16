@@ -1,0 +1,20 @@
+services:
+  library-api:
+    image: anotherdanger/go:latest
+    container_name: library-api
+    environment:
+      DB_URL: root@tcp(mysql:3306)/library
+    ports:
+      - 8080:8080
+    volumes:
+      - type: volume
+        source: mysql
+        target: /var/lib/mysql
+    networks:
+      - myApp
+networks:
+  myApp:
+    external: true
+volumes:
+  mysql:
+    external: true

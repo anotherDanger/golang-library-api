@@ -6,14 +6,10 @@ import (
 	"time"
 
 	_ "github.com/go-sql-driver/mysql"
-	"github.com/joho/godotenv"
 )
 
 func Db() *sql.DB {
-	err := godotenv.Load()
-	if err != nil {
-		panic(err)
-	}
+
 	db, err := sql.Open("mysql", os.Getenv("DB_URL"))
 	if err != nil {
 
