@@ -6,7 +6,7 @@ ENV DB_URL=""
 
 WORKDIR /app
 COPY ./ .
-run go build -o main .
+RUN go build -o main .
 
 EXPOSE 8080
 

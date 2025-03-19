@@ -14,7 +14,7 @@ type ServiceImpl struct {
 	db         *sql.DB
 }
 
-func NewService(repository repository.Repository, db *sql.DB) Service {
+func NewService(repository repository.Repository, db *sql.DB) *ServiceImpl {
 	return &ServiceImpl{
 		repository: repository,
 		db:         db,

@@ -14,7 +14,7 @@ type ControllerImpl struct {
 	service service.Service
 }
 
-func NewController(service service.Service) Controller {
+func NewController(service service.Service) *ControllerImpl {
 	return &ControllerImpl{
 		service: service,
 	}

@@ -10,6 +10,12 @@ type AuthMiddleware struct {
 	Handler http.Handler
 }
 
+func NewAuthMiddleware(Handler http.Handler) *AuthMiddleware {
+	return &AuthMiddleware{
+		Handler: Handler,
+	}
+}
+
 func (auth *AuthMiddleware) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	apikey := r.Header.Get("X-API-Key")
 	if apikey == "SECRET" {
