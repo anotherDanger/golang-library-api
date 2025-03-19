@@ -2,32 +2,24 @@ package tests
 
 import (
 	"encoding/json"
+	helper_test "golang-library-api/tests/helper"
 	"net/http"
 	"net/http/httptest"
+	"strconv"
 	"testing"
 
 	"github.com/julienschmidt/httprouter"
 	"github.com/stretchr/testify/assert"
 )
 
-type BookResponse struct {
-	Id     int    `json:"id"`
-	Name   string `json:"name"`
-	Author string `json:"author,omitempty"`
-}
-
-type WebResponse struct {
-	Code   int           `json:"code"`
-	Status string        `json:"status"`
-	Data   *BookResponse `json:"data,omitempty"`
-}
-
-func MockGETOK(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
-	response := &WebResponse{
+func MockOKFindById(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+	id := p.ByName("id")
+	atoi, _ := strconv.Atoi(id)
+	response := &helper_test.WebResponse{
 		Code:   200,
 		Status: "OK",
-		Data: &BookResponse{
-			Id:     1,
+		Data: &helper_test.BookResponse{
+			Id:     atoi,
 			Name:   "Programming",
 			Author: "Andhika Danger",
 		},
@@ -37,8 +29,8 @@ func MockGETOK(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	json.NewEncoder(w).Encode(response)
 }
 
-func MockGETFailed(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
-	response := &WebResponse{
+func MockFailedFindById(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+	response := &helper_test.WebResponse{
 		Code:   401,
 		Status: "unauthorized",
 		Data:   nil,
@@ -48,10 +40,10 @@ func MockGETFailed(w http.ResponseWriter, r *http.Request, p httprouter.Params) 
 	json.NewEncoder(w).Encode(response)
 }
 
-func TestGETOK(t *testing.T) {
+func TestFindByIdOK(t *testing.T) {
 	router := httprouter.New()
-	router.GET("/books", MockGETOK)
-	request := httptest.NewRequest("GET", "http://localhost:8080/books", nil)
+	router.GET("/v1/library/:id", MockOKFindById)
+	request := httptest.NewRequest("GET", "http://localhost:8080/v1/library/1", nil)
 	recorder := httptest.NewRecorder()
 
 	router.ServeHTTP(recorder, request)
@@ -59,13 +51,13 @@ func TestGETOK(t *testing.T) {
 	response := recorder.Result()
 	defer response.Body.Close()
 
-	var WebResponses WebResponse
+	var WebResponses helper_test.WebResponse
 	json.NewDecoder(response.Body).Decode(&WebResponses)
 
-	expected := &WebResponse{
+	expected := &helper_test.WebResponse{
 		Code:   200,
 		Status: "OK",
-		Data: &BookResponse{
+		Data: &helper_test.BookResponse{
 			Id:     1,
 			Name:   "Programming",
 			Author: "Andhika Danger",
@@ -77,17 +69,17 @@ func TestGETOK(t *testing.T) {
 
 func TestFailed(t *testing.T) {
 	router := httprouter.New()
-	router.GET("/books", MockGETFailed)
-	request := httptest.NewRequest("GET", "http://localhost:8080/books", nil)
+	router.GET("/v1/library", MockFailedFindById)
+	request := httptest.NewRequest("GET", "http://localhost:8080/v1/library", nil)
 	recorder := httptest.NewRecorder()
 
 	router.ServeHTTP(recorder, request)
 
 	response := recorder.Result()
 	defer response.Body.Close()
-	var responses WebResponse
+	var responses helper_test.WebResponse
 	json.NewDecoder(response.Body).Decode(&responses)
-	expected := &WebResponse{
+	expected := &helper_test.WebResponse{
 		Code:   401,
 		Status: "unauthorized",
 		Data:   nil,
